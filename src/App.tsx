@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { motion } from 'motion/react'
 import { ArrowUpRight, Bot, Cpu, Mail, Network, Sparkles } from 'lucide-react'
 import { projects, profile, skills } from '@/data/site-content'
 
@@ -14,6 +15,48 @@ function App() {
   )
 
   const year = new Date().getFullYear()
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const typewriterName = profile.name
+  const typewriterText = 'Operations notebook for software and infrastructure.'
+  const totalTypeLength = Math.max(typewriterName.length, typewriterText.length)
+  const [typedName, setTypedName] = useState(
+    prefersReducedMotion ? typewriterName : '',
+  )
+  const [typedSubline, setTypedSubline] = useState(
+    prefersReducedMotion ? typewriterText : '',
+  )
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setTypedName(typewriterName)
+      setTypedSubline(typewriterText)
+      return
+    }
+
+    setTypedName('')
+    setTypedSubline('')
+    let index = 0
+    const timer = window.setInterval(() => {
+      index += 1
+      setTypedName(typewriterName.slice(0, index))
+      setTypedSubline(typewriterText.slice(0, index))
+
+      if (index >= totalTypeLength) {
+        window.clearInterval(timer)
+      }
+    }, 38)
+
+    return () => {
+      window.clearInterval(timer)
+    }
+  }, [prefersReducedMotion])
+
+  const showNameCaret = !prefersReducedMotion && typedName.length < typewriterName.length
+  const showSublineCaret =
+    !prefersReducedMotion &&
+    typedSubline.length < typewriterText.length
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -79,8 +122,32 @@ function App() {
               {profile.role}
             </p>
             <h1 id="hero-title">
-              <span>{profile.name}</span>
-              <span className="hero-subline">Operations notebook for software and infrastructure.</span>
+              <span aria-label={typewriterName}>
+                {typedName}
+                {showNameCaret && (
+                  <motion.span
+                    className="type-caret"
+                    aria-hidden="true"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    |
+                  </motion.span>
+                )}
+              </span>
+              <span className="hero-subline" aria-label={typewriterText}>
+                {typedSubline}
+                {showSublineCaret && (
+                  <motion.span
+                    className="type-caret"
+                    aria-hidden="true"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    |
+                  </motion.span>
+                )}
+              </span>
             </h1>
             <p className="hero-text">{profile.heroSummary}</p>
 

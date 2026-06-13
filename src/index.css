@@ -69,7 +69,7 @@ a {
 }
 
 .site-nav {
-  width: calc(100% - clamp(1.5rem, 4vw, 4rem));
+  width: min(1320px, calc(100% - clamp(1.5rem, 4vw, 4rem)));
   margin: 0 auto;
   padding: 0.9rem 0;
   display: flex;
@@ -102,7 +102,7 @@ a {
 }
 
 .site-main {
-  width: calc(100% - clamp(1.5rem, 4vw, 4rem));
+  width: min(1440px, calc(100% - clamp(2rem, 8vw, 9rem)));
   margin: 0 auto;
   padding: 3.1rem 0 4.3rem;
   display: grid;
@@ -117,7 +117,8 @@ a {
 }
 
 .hero-copy {
-  max-width: none;
+  width: min(1080px, 100%);
+  margin-inline: auto;
 }
 
 .hero-chip {
@@ -152,12 +153,18 @@ a {
   color: var(--ink-muted);
   font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
   line-height: 1.25;
-  max-width: 26ch;
+  max-width: 34ch;
+}
+
+.type-caret {
+  display: inline-block;
+  margin-left: 0.15rem;
+  color: var(--signal);
 }
 
 .hero-text {
   margin: 1.45rem 0 0;
-  max-width: none;
+  max-width: 84ch;
   font-size: 1.03rem;
   color: var(--ink-muted);
 }
@@ -211,6 +218,8 @@ a {
 .section {
   display: grid;
   gap: 1rem;
+  width: min(1080px, 100%);
+  margin-inline: auto;
 }
 
 .kicker {
@@ -224,7 +233,7 @@ a {
 
 .section-title {
   margin: 0;
-  max-width: none;
+  max-width: 24ch;
   font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
   font-size: clamp(1.72rem, 3.4vw, 2.82rem);
   line-height: 1;
@@ -233,7 +242,7 @@ a {
 
 .section-copy {
   margin: 0;
-  max-width: none;
+  max-width: 78ch;
   color: var(--ink-muted);
   font-size: 1.02rem;
 }
@@ -356,7 +365,7 @@ a {
 }
 
 .site-footer {
-  width: calc(100% - clamp(1.5rem, 4vw, 4rem));
+  width: min(1320px, calc(100% - clamp(1.5rem, 4vw, 4rem)));
   margin: 0 auto 2rem;
   border-top: 1px solid color-mix(in srgb, var(--line) 58%, transparent);
   padding-top: 1rem;
@@ -402,6 +411,10 @@ a {
 }
 
 @media (max-width: 920px) {
+  .site-main {
+    width: min(1320px, calc(100% - clamp(1.25rem, 6vw, 2rem)));
+  }
+
   .hero {
     grid-template-columns: 1fr;
   }
