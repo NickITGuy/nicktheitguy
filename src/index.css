@@ -86,36 +86,6 @@ a {
   mix-blend-mode: screen;
 }
 
-.creature-core {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  background: radial-gradient(circle at 35% 30%, #fff 0%, #99e1ff 28%, #3f7cff 68%, rgba(63, 124, 255, 0.1) 100%);
-  filter: blur(0.5px) drop-shadow(0 0 18px rgba(64, 145, 255, 0.8));
-  pointer-events: none;
-}
-
-.creature-node {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(0, 219, 255, 0.75) 48%, rgba(0, 109, 255, 0.2) 100%);
-  filter: drop-shadow(0 0 12px rgba(0, 197, 255, 0.5));
-  pointer-events: none;
-}
-
-@media (pointer: coarse) {
-  .js-creature-wrap {
-    display: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -126,7 +96,4 @@ a {
     scroll-behavior: auto !important;
   }
 
-  .js-creature-wrap {
-    display: none;
-  }
 }

@@ -167,87 +167,17 @@ function App() {
       }
     })()
 
-    const creatureWrap = document.querySelector<HTMLElement>('.js-creature-wrap')
-    const creatureCore = document.querySelector<HTMLElement>('.js-creature-core')
-    const creatureNodes = Array.from(
-      document.querySelectorAll<HTMLElement>('.js-creature-node'),
-    )
-
-    const creatureCleanup = (() => {
-      if (!creatureWrap || !creatureCore || creatureNodes.length === 0 || reduceMotion) {
-        return () => {}
-      }
-
-      let rafId = 0
-      const target = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5 }
-      const head = { x: target.x, y: target.y }
-      const trail = creatureNodes.map(() => ({ x: target.x, y: target.y }))
-
-      const tick = () => {
-        head.x += (target.x - head.x) * 0.24
-        head.y += (target.y - head.y) * 0.24
-
-        let leadX = head.x
-        let leadY = head.y
-
-        trail.forEach((node, index) => {
-          const follow = Math.max(0.22, 0.42 - index * 0.015)
-          node.x += (leadX - node.x) * follow
-          node.y += (leadY - node.y) * follow
-          leadX = node.x
-          leadY = node.y
-
-          const scale = 1 - index * 0.05
-          const nodeEl = creatureNodes[index]
-          nodeEl.style.transform = `translate3d(${node.x}px, ${node.y}px, 0) translate(-50%, -50%) scale(${scale})`
-        })
-
-        creatureCore.style.transform = `translate3d(${head.x}px, ${head.y}px, 0) translate(-50%, -50%)`
-        rafId = window.requestAnimationFrame(tick)
-      }
-
-      const onMove = (event: PointerEvent) => {
-        target.x = event.clientX
-        target.y = event.clientY
-      }
-
-      const pulse = animate(creatureCore, {
-        scale: [1, 1.28],
-        opacity: [0.56, 0.94],
-        duration: 820,
-        direction: 'alternate',
-        loop: true,
-        ease: 'inOut(2)',
-      })
-
-      window.addEventListener('pointermove', onMove)
-      rafId = window.requestAnimationFrame(tick)
-
-      return () => {
-        window.removeEventListener('pointermove', onMove)
-        window.cancelAnimationFrame(rafId)
-        pulse.revert()
-      }
-    })()
-
     return () => {
       intro.revert()
       orbs.revert()
       observer.disconnect()
       hoverCleans.forEach((clean) => clean())
       pointerCleanup()
-      creatureCleanup()
     }
   }, [])
 
   return (
     <div className="relative overflow-x-hidden">
-      <div className="js-creature-wrap pointer-events-none fixed inset-0 z-40" aria-hidden="true">
-        <div className="js-creature-core creature-core" />
-        {Array.from({ length: 12 }).map((_, index) => (
-          <span key={`creature-${index}`} className="js-creature-node creature-node" />
-        ))}
-      </div>
       <div className="pointer-events-none absolute inset-0 neon-grid" aria-hidden="true" />
       <div className="pointer-events-none absolute -left-14 top-24 h-48 w-48 rounded-full bg-[rgba(0,252,255,0.2)] blur-3xl js-orb" />
       <div className="pointer-events-none absolute right-4 top-64 h-40 w-40 rounded-full bg-[rgba(255,43,163,0.18)] blur-3xl js-orb" />
