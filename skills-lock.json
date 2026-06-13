@@ -7,6 +7,12 @@
       "skillPath": "skills/cloudflare/SKILL.md",
       "computedHash": "fcb47a959393265b575b30ce960efe6308e642c9ee11f8ed9e461bc904ff15ce"
     },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "93f53fd1c0352d3d7ec17b8f73d7351bf76f4821e55d123c9d2abc2c53ba48e4"
+    },
     "wrangler": {
       "source": "cloudflare/skills",
       "sourceType": "github",
